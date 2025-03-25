@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import type { Configuration as WebpackConfig } from "webpack";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -38,7 +37,7 @@ const nextConfig: NextConfig = {
     ];
   },
   // Optional: Webpack configuration to better handle Google Maps
-  webpack: (config: WebpackConfig) => {
+  webpack: (config: any) => {
     // This helps with handling certain modules
     if (config.resolve && config.resolve.fallback) {
       config.resolve.fallback = { ...config.resolve.fallback, fs: false };
