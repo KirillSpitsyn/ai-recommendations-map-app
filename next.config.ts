@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
       'streetviewpixels-pa.googleapis.com'
     ],
   },
-  // Updated headers configuration for Content Security Policy
+  // Updated headers configuration for Content Security Policy that properly handles Google Maps
   async headers() {
     return [
       {
@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; connect-src 'self' *.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com *.gstatic.com; style-src 'self' 'unsafe-inline' *.googleapis.com; img-src 'self' data: blob: *.googleapis.com *.gstatic.com; font-src 'self' data: fonts.gstatic.com;"
+            value: "default-src 'self'; connect-src 'self' *.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com *.gstatic.com; style-src 'self' 'unsafe-inline' *.googleapis.com; img-src 'self' data: blob: *.googleapis.com *.gstatic.com lh3.googleusercontent.com streetviewpixels-pa.googleapis.com; font-src 'self' data: fonts.gstatic.com; worker-src 'self' blob:;"
           },
         ],
       },
