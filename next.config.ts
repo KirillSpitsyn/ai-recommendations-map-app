@@ -1,5 +1,7 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from "next";
+import type { Configuration as WebpackConfig } from "webpack";
+
+const nextConfig: NextConfig = {
   /* config options here */
   eslint: {
     ignoreDuringBuilds: true, // Skips ESLint errors during production build
@@ -36,11 +38,15 @@ const nextConfig = {
     ];
   },
   // Optional: Webpack configuration to better handle Google Maps
-  webpack: (config) => {
+  webpack: (config: WebpackConfig) => {
     // This helps with handling certain modules
-    config.resolve.fallback = { ...config.resolve.fallback, fs: false };
+    if (config.resolve && config.resolve.fallback) {
+      config.resolve.fallback = { ...config.resolve.fallback, fs: false };
+    } else if (config.resolve) {
+      config.resolve.fallback = { fs: false };
+    }
     return config;
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
