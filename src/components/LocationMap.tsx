@@ -1,11 +1,8 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow, DirectionsRenderer } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow, DirectionsRenderer, Libraries } from '@react-google-maps/api';
 import { Location } from './LocationList';
-
-// Define the Libraries type that matches what Google Maps API expects
-type Libraries = ('drawing' | 'geometry' | 'localContext' | 'places' | 'visualization')[];
 
 // Define libraries as a constant array outside of the component
 // This prevents the LoadScript component from reloading
@@ -32,7 +29,7 @@ const LocationMap: React.FC<LocationMapProps> = ({
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
-        libraries: libraries // Use the constant array defined above
+        libraries // Use the constant array defined above
     });
 
     // Rest of your component remains the same
@@ -44,8 +41,8 @@ const LocationMap: React.FC<LocationMapProps> = ({
 
     // Log to debug
     useEffect(() => {
-        console.log("Current placePhotos state:", placePhotos);
-    }, [placePhotos]);
+        console.log("Map loaded");
+    }, [map]);
 
     // Calculate center coordinates from locations if not provided
     useEffect(() => {
