@@ -4,6 +4,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, DirectionsRenderer } from '@react-google-maps/api';
 import { Location } from './LocationList';
 
+// Define libraries as a constant array outside of the component
+// This prevents the LoadScript component from reloading
+const libraries = ['places'];
+
 // Create a photos context to share photos between components
 export const PlacePhotosContext = React.createContext<Record<string, string>>({});
 
@@ -25,9 +29,10 @@ const LocationMap: React.FC<LocationMapProps> = ({
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
-        libraries: ['places']
+        libraries: libraries // Use the constant array defined above
     });
 
+    // Rest of your component remains the same
     const [map, setMap] = useState<google.maps.Map | null>(null);
     const [mapCenter, setMapCenter] = useState<{ lat: number; lng: number } | null>({ lat: 43.6532, lng: -79.3832 }); // Toronto coordinates
     const [circle, setCircle] = useState<google.maps.Circle | null>(null);
