@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, DirectionsRenderer, Libraries } from '@react-google-maps/api';
 import { Location } from './LocationList';
 
@@ -26,10 +26,13 @@ const LocationMap: React.FC<LocationMapProps> = ({
     profileImage,
     centerCoordinates,
 }) => {
+    // Use useMemo to create a stable reference to the libraries array
+    const libraries = useMemo(() => ['places'], []);
+    
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
-        libraries // Use the constant array defined above
+        libraries
     });
 
     // Rest of your component remains the same
