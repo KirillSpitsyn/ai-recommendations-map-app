@@ -4,9 +4,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow, DirectionsRenderer } from '@react-google-maps/api';
 import { Location } from './LocationList';
 
+// Define the Libraries type that matches what Google Maps API expects
+type Libraries = ('drawing' | 'geometry' | 'localContext' | 'places' | 'visualization')[];
+
 // Define libraries as a constant array outside of the component
 // This prevents the LoadScript component from reloading
-const libraries = ['places'];
+const libraries: Libraries = ['places'];
 
 // Create a photos context to share photos between components
 export const PlacePhotosContext = React.createContext<Record<string, string>>({});
