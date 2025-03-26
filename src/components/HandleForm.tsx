@@ -53,15 +53,15 @@ const HandleForm: React.FC<HandleFormProps> = ({ onSubmit, isLoading, defaultLoc
                     </label>
                     <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">@</span>
-                        <input
-                            type="text"
-                            id="xHandle"
-                            value={xHandle}
-                            onChange={(e) => setXHandle(e.target.value)}
-                            className="pl-7 w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="username"
-                            disabled={isLoading}
-                        />
+                    <input
+                        type="text"
+                        id="xHandle"
+                        value={xHandle}
+                        onChange={(e) => setXHandle(e.target.value)}
+                        className="pl-7 w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black dark:text-black"
+                        placeholder="username"
+                        disabled={isLoading}
+                    />
                     </div>
                 </div>
 
