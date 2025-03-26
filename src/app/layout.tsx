@@ -5,7 +5,7 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-    title: 'Bespoken Beaver | X Persona Location Finder',
+    title: 'Bespoken Beaver by Toronto DAO | X Persona Location Finder',
     description: 'Discover places tailored to your X personality profile',
 };
 
@@ -16,6 +16,13 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
+        <head>
+            {/* Adding CSP meta tag directly */}
+            <meta
+                httpEquiv="Content-Security-Policy"
+                content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com *.gstatic.com; style-src 'self' 'unsafe-inline' *.googleapis.com; img-src 'self' data: blob: *.googleapis.com *.gstatic.com lh3.googleusercontent.com streetviewpixels-pa.googleapis.com; font-src 'self' data: fonts.gstatic.com; connect-src 'self' *.googleapis.com;"
+            />
+        </head>
         <body className={inter.className}>
         <div className="min-h-screen flex flex-col">
             <header className="bg-blue-600 text-white py-4 shadow-md">
@@ -31,7 +38,7 @@ export default function RootLayout({
 
             <footer className="bg-gray-100 py-4 border-t border-gray-200">
                 <div className="container mx-auto px-4 text-center text-gray-600 text-sm">
-                    <p>© 2025 Bespoken Beaver. All rights reserved.</p>
+                    <p>© 2025 Toronto DAO. All rights reserved.</p>
                     <p className="mt-1">We respect your privacy and do not store any of your personal data.</p>
                 </div>
             </footer>
