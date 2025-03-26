@@ -37,7 +37,7 @@ export default function RootLayout({
                                     className="rounded-full"
                                 />
                     </div>*/}
-                    <h1 className="text-2xl font-bold">Bespoken Beaver</h1>
+                    <h1 className="text-2xl font-bold">Bespoken Beaver by Toronto DAO</h1>
                     <p className="text-sm text-blue-100">Discover your perfect places based on your X persona</p>
                 </div>
             </header>
