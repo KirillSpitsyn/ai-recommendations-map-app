@@ -29,7 +29,7 @@ export default function RootLayout({
                 <div className="container mx-auto px-4">
                     <div className="mr-3">
                                 <Image 
-                                    src="/beaver-logo.svg" 
+                                    src="/bespoken_beaver.webp" 
                                     alt="Beaver Logo" 
                                     width={36} 
                                     height={36} 
