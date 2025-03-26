@@ -27,15 +27,15 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
             <header className="bg-blue-600 text-white py-4 shadow-md">
                 <div className="container mx-auto px-4">
-                    <div className="mr-3">
-                        {/* <Image 
+                    {/* <div className="mr-3">
+                             <Image 
                                     src="/bespoken_beaver.webp" 
                                     alt="Beaver Logo" 
                                     width={36} 
                                     height={36} 
                                     className="rounded-full"
-                                />*/}
-                    </div>
+                                />
+                    </div>*/}
                     <h1 className="text-2xl font-bold">Bespoken Beaver</h1>
                     <p className="text-sm text-blue-100">Discover your perfect places based on your X persona</p>
                 </div>
