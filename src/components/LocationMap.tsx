@@ -27,7 +27,7 @@ const LocationMap: React.FC<LocationMapProps> = ({
     centerCoordinates,
 }) => {
     // Use useMemo to create a stable reference to the libraries array
-    const libraries = useMemo(() => ['places'], []);
+    const libraries = useMemo(() => ['places'], []) as any;
     
     const { isLoaded, loadError } = useJsApiLoader({
         id: 'google-map-script',
