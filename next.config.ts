@@ -12,20 +12,7 @@ const nextConfig: NextConfig = {
       'streetviewpixels-pa.googleapis.com'
     ],
   },
-  // Simplified CSP that explicitly allows eval
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.gstatic.com;"
-          },
-        ],
-      },
-    ];
-  },
+  // Remove the headers section completely to test if it's indeed a CSP issue
 };
 
 export default nextConfig;
