@@ -161,7 +161,7 @@ export default function Home() {
                     <LoadingState message="Generating your personalized Toronto recommendations..." />
                 ) : locations.length > 0 ? (
                     <div className="space-y-4">
-                      <h2 className="text-2xl font-bold text-black dark:text-white">Your Toronto Recommendations</h2>
+                      <h2 className="text-2xl font-bold">Your Toronto Recommendations</h2>
                       {/* Location List */}
                       <LocationList
                           locations={locations}
