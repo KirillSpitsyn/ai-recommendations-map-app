@@ -57,28 +57,8 @@ const PersonaCard: React.FC<PersonaCardProps> = ({ persona, isLoading, error }) 
     return (
         <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0">
-                    {persona.profileImageUrl ? (
-                        <div className="rounded-full overflow-hidden h-16 w-16 relative border-2 border-blue-100">
-                            <Image
-                                src={persona.profileImageUrl}
-                                alt={persona.name}
-                                width={64}
-                                height={64}
-                                className="object-cover"
-                            />
-                        </div>
-                    ) : (
-                        <div className="rounded-full bg-blue-100 h-16 w-16 flex items-center justify-center">
-              <span className="text-2xl text-blue-500">
-                {persona.name.charAt(0).toUpperCase()}
-              </span>
-                        </div>
-                    )}
-                </div>
-
                 <div className="flex-1">
-                    <h2 className="text-xl font-bold">{persona.name}</h2>
+                    <h2 className="text-xl text-black">{persona.name}</h2>
                     <p className="text-gray-500">@{persona.handle}</p>
                     <p className="mt-2 text-gray-700">{persona.bio}</p>
                 </div>
