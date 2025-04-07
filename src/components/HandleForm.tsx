@@ -58,7 +58,7 @@ const HandleForm: React.FC<HandleFormProps> = ({ onSubmit, isLoading, defaultLoc
                         id="xHandle"
                         value={xHandle}
                         onChange={(e) => setXHandle(e.target.value)}
-                        className="pl-7 w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black dark:text-black"
+                        className="pl-7 w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                         placeholder="username"
                         disabled={isLoading}
                     />
