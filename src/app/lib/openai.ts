@@ -32,41 +32,6 @@ export class OpenAIClient {
     }
 
     /**
-     * Creates an optimized system prompt for persona generation
-     * @returns Engineered system prompt
-     */
-    private createPersonaSystemPrompt(): string {
-        return `
-      You are an expert at understanding people based on their social media presence.
-      Your task is to create a detailed persona based on someone's X (formerly Twitter) posts and bio.
-      Analyze the content, style, interests, and values expressed in their posts to build this persona.
-      
-      Focus on identifying:
-      1. Personality traits (e.g., analytical, creative, empathetic)
-      2. Communication style (e.g., direct, humorous, formal)
-      3. Values and beliefs (e.g., values authenticity, environmental consciousness)
-      4. Interests and activities (e.g., technology, cooking, hiking)
-      5. Lifestyle indicators (e.g., urban professional, outdoor enthusiast)
-      
-      Return a JSON object with the following structure:
-      {
-        "name": "Their name (if available, otherwise 'Unknown User')",
-        "handle": "Their X handle (without the @ symbol)",
-        "bio": "A concise 1-2 sentence description of who they are",
-        "traits": ["trait1", "trait2", "trait3", "trait4", "trait5"],
-        "interests": ["interest1", "interest2", "interest3", "interest4", "interest5"]
-      }
-      
-      The traits should represent personality characteristics, communication style, and values.
-      The interests should be specific topics, activities, or areas they seem interested in.
-      Be specific and precise in your analysis. Base your assessment purely on the provided data.
-      
-      If there isn't enough information to determine specific traits or interests, make educated guesses
-      based on the limited information available, but keep them reasonable and grounded.
-    `;
-    }
-
-    /**
      * Creates a user prompt for persona generation based on context
      * @param context X profile data to use as context
      * @returns Engineered user prompt
@@ -105,7 +70,35 @@ export class OpenAIClient {
             const client = this.initializeClient();
 
             // Get optimized prompts
-            const systemPrompt = this.createPersonaSystemPrompt();
+            const systemPrompt = `
+              You are an expert at understanding people based on their social media presence.
+              Your task is to create a detailed persona based on someone's X (formerly Twitter) posts and bio.
+              Analyze the content, style, interests, and values expressed in their posts to build this persona.
+              
+              Focus on identifying:
+              1. Personality traits (e.g., analytical, creative, empathetic)
+              2. Communication style (e.g., direct, humorous, formal)
+              3. Values and beliefs (e.g., values authenticity, environmental consciousness)
+              4. Interests and activities (e.g., technology, cooking, hiking)
+              5. Lifestyle indicators (e.g., urban professional, outdoor enthusiast)
+              
+              Return a JSON object with the following structure:
+              {
+                "name": "Their actual name from the data (NEVER use 'Unknown User')",
+                "handle": "Their X handle (without the @ symbol)",
+                "bio": "A concise 1-2 sentence description of who they are",
+                "traits": ["trait1", "trait2", "trait3", "trait4", "trait5"],
+                "interests": ["interest1", "interest2", "interest3", "interest4", "interest5"]
+              }
+              
+              The traits should represent personality characteristics, communication style, and values.
+              The interests should be specific topics, activities, or areas they seem interested in.
+              Be specific and precise in your analysis. Base your assessment purely on the provided data.
+              
+              Do NOT use generic placeholder names like "Unknown User". If you can't determine their actual name,
+              use their handle as their name without the @ symbol.
+            `;
+            
             const userPrompt = this.createPersonaUserPrompt(context);
 
             // Call OpenAI API
@@ -129,8 +122,13 @@ export class OpenAIClient {
             // Parse the JSON response
             const personaData = JSON.parse(content) as OpenAIPersonaResponse;
 
+            // Fallback if name is still "Unknown User" or empty
+            if (!personaData.name || personaData.name === 'Unknown User') {
+                personaData.name = personaData.handle;
+            }
+
             // Validate response structure
-            if (!personaData.name || !personaData.traits || !personaData.interests) {
+            if (!personaData.traits || !personaData.interests) {
                 throw new Error('Failed to generate persona: Invalid response format');
             }
 
@@ -140,7 +138,7 @@ export class OpenAIClient {
             throw new Error('Failed to generate persona');
         }
     }
-    
+
     /**
      * Generate location recommendations in Toronto based on persona
      * @param persona The persona to generate recommendations for
@@ -151,12 +149,11 @@ export class OpenAIClient {
         const client = this.initializeClient();
         
         // Create individual location recommendations in separate API calls
-        // This approach is more reliable than trying to get an array in a single call
         const recommendationPromises = [];
         const categories = ['restaurant', 'cafe', 'entertainment venue', 'cultural attraction', 'outdoor space'];
         
         for (let i = 0; i < 5; i++) {
-            // Create a prompt for a single location recommendation
+            // Create a prompt for a single location recommendation with BRIEF descriptions
             const category = categories[i];
             const prompt = `Based on this persona, recommend ONE specific ${category} in Toronto:
             
@@ -166,11 +163,11 @@ export class OpenAIClient {
             Interests: ${persona.interests.join(', ')}
             
             Return ONLY ONE location recommendation as a JSON object with these fields:
-            - name: The location name
+            - name: The location name (must be a real Toronto location)
             - address: Full Toronto address
-            - description: Why this place fits the persona
+            - description: Why this place fits the persona (KEEP THIS VERY BRIEF - 1-2 SHORT sentences only!)
             - category: "${category}"
-            - coordinates: Object with lat and lng
+            - coordinates: Object with lat and lng (realistic Toronto coordinates)
             - rating: Numeric rating (1-5)`;
             
             recommendationPromises.push(
@@ -179,11 +176,11 @@ export class OpenAIClient {
                     messages: [
                         { 
                             role: 'system', 
-                            content: `You are a Toronto local expert. Recommend ONE specific ${category} in Toronto that matches this persona.` 
+                            content: `You are a Toronto local expert. Recommend a SPECIFIC ${category} in Toronto that matches this persona. Keep descriptions extremely brief - 1-2 short sentences maximum.` 
                         },
                         { role: 'user', content: prompt }
                     ],
-                    temperature: 0.7,
+                    temperature: 0.5,
                     response_format: { type: 'json_object' },
                 })
             );
@@ -217,12 +214,17 @@ export class OpenAIClient {
             }
         }
         
+        // Remove any duplicates by name
+        const uniqueLocations = locations.filter((location, index, self) =>
+            index === self.findIndex((l) => l.name === location.name)
+        );
+        
         // If we didn't get any locations, throw an error
-        if (locations.length === 0) {
+        if (uniqueLocations.length === 0) {
             throw new Error('Failed to generate any location recommendations');
         }
         
-        return locations;
+        return uniqueLocations;
     }
 }
 
