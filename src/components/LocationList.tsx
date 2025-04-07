@@ -71,8 +71,8 @@ const LocationList: React.FC<LocationListProps> = ({
 
     return (
         <div className="space-y-4 mt-4">
-            <h2 className="text-xl font-bold text-black dark:text-white">Recommended Locations</h2>
-            <p className="text-sm text-black dark:text-white">Based on your X persona profile</p>
+            <h2 className="text-xl font-bold">Recommended Locations</h2>
+            <p className="text-sm text-black">Based on your X persona profile</p>
 
             <div className="space-y-3">
                 {locations.map((location, index) => {
