@@ -126,7 +126,7 @@ export default function Home() {
     <main className="min-h-screen bg-gray-50 py-4">
       <div className="container mx-auto px-4">
         <header className="mb-6 text-center">
-          <h1 className="text-3xl font-bold mb-2">X Persona Toronto Finder</h1>
+          <h1 className="text-3xl font-bold mb-2 text-black">X Persona Toronto Finder</h1>
           <p className="text-gray-600">
             Discover places in Toronto tailored to your X personality
           </p>
