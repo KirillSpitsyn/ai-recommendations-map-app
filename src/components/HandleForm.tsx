@@ -30,7 +30,7 @@ const HandleForm: React.FC<HandleFormProps> = ({ onSubmit, isLoading }) => {
 
     return (
         <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-xl font-bold mb-4">Generate Your Toronto Recommendations</h2>
+            <h2 className="text-xl font-bold mb-4 text-black">Generate Your Toronto Recommendations</h2>
 
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -44,7 +44,7 @@ const HandleForm: React.FC<HandleFormProps> = ({ onSubmit, isLoading }) => {
                             id="xHandle"
                             value={xHandle}
                             onChange={(e) => setXHandle(e.target.value)}
-                            className="pl-7 w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            className="pl-7 w-full p-2 border border-gray-700 rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
                             placeholder="username"
                             disabled={isLoading}
                         />
@@ -86,7 +86,7 @@ const HandleForm: React.FC<HandleFormProps> = ({ onSubmit, isLoading }) => {
             
             {/* How It Works section moved directly below the form */}
             <div className="mt-4 pt-4 border-t border-gray-200">
-                <h3 className="font-medium text-base mb-2">How It Works</h3>
+                <h3 className="font-medium text-black mb-2">How It Works</h3>
                 <ol className="list-decimal pl-5 space-y-1 text-sm text-gray-600">
                     <li>Enter your X handle (e.g., @username)</li>
                     <li>We'll analyze your X profile to understand your preferences</li>
