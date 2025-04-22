@@ -42,10 +42,20 @@ const LocationMap: React.FC<LocationMapProps> = ({
     const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
     const [placePhotos, setPlacePhotos] = useState<Record<string, string>>({});
 
-    // Log to debug
-    useEffect(() => {
-        console.log("Map loaded");
-    }, [map]);
+    // Helper function to check if a website URL is valid
+    const isValidWebsite = (url?: string): boolean => {
+        if (!url) return false;
+        // Check if it's a Google Maps link or not a proper URL
+        if (url.includes('google.com/maps')) return false;
+        
+        // Try to validate it's a real website URL
+        try {
+            const websiteUrl = new URL(url);
+            return websiteUrl.protocol.startsWith('http') && websiteUrl.hostname.includes('.');
+        } catch (e) {
+            return false;
+        }
+    };
 
     // Calculate center coordinates from locations if not provided
     useEffect(() => {
@@ -242,8 +252,10 @@ const LocationMap: React.FC<LocationMapProps> = ({
             bar: '🍸',
             park: '🌳',
             museum: '🏛️',
+            shop: '🛍️',
             shopping: '🛍️',
             entertainment: '🎭',
+            attraction: '🏙️',
             sports: '🏃',
             fitness: '💪',
             education: '📚',
@@ -276,7 +288,9 @@ const LocationMap: React.FC<LocationMapProps> = ({
             park: '#66BB6A',
             museum: '#FFC107',
             shopping: '#EC407A',
+            shop: '#EC407A',
             entertainment: '#448AFF',
+            attraction: '#8E24AA',
             sports: '#26A69A',
             fitness: '#EF5350',
             education: '#5C6BC0',
@@ -317,7 +331,7 @@ const LocationMap: React.FC<LocationMapProps> = ({
     return (
         <PlacePhotosContext.Provider value={placePhotos}>
             <div className="rounded-lg overflow-hidden shadow-md">
-                <div className="h-[800px]"> {/* Much taller map (was 600px) */}
+                <div className="h-[600px]">
                     <GoogleMap
                         mapContainerStyle={{ width: '100%', height: '100%' }}
                         center={mapCenter || { lat: 43.6532, lng: -79.3832 }} // Default to Toronto
@@ -397,6 +411,21 @@ const LocationMap: React.FC<LocationMapProps> = ({
                                                     </span>
                                                 )}
                                             </div>
+                                            {isValidWebsite(location.website) && (
+                                                <div className="mt-3">
+                                                    <a 
+                                                        href={location.website}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center justify-center w-full bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium py-2 px-3 rounded transition-colors"
+                                                    >
+                                                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                                        </svg>
+                                                        Visit Website
+                                                    </a>
+                                                </div>
+                                            )}
                                             <div className="mt-2 text-xs text-gray-500">
                                                 Location #{index + 1} in Toronto
                                             </div>
