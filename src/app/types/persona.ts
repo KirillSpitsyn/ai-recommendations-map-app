@@ -44,6 +44,7 @@ export enum InterestCategory {
 export interface PersonaGenerationContext {
     recentTweets: string[];
     bio: string;
+    handle?: string; // Added handle field for better name fallbacks
     followingTopics?: string[];
     interactionTopics?: string[];
     profileDescription?: string;
