@@ -25,6 +25,8 @@ export enum LocationCategory {
     ART = 'art',
     MUSIC = 'music',
     OUTDOOR = 'outdoor',
+    ATTRACTION = 'attraction',
+    SHOP = 'shop',
 }
 
 // Location detail type
