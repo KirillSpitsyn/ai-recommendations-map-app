@@ -1,4 +1,3 @@
-
 /**
  * API Request and Response Types
  */
@@ -46,6 +45,7 @@ export interface GenerateLocationsResponse {
             lng: number;
         };
         rating?: number;
+        website?: string;
     }>;
     error?: string;
 }
