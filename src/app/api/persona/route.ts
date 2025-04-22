@@ -27,8 +27,8 @@ export async function POST(request: NextRequest) {
             // Step 1: Search for X profile data using Exa
             const searchResult = await exaClient().searchXProfile(cleanHandle);
 
-            // Step 2: Extract relevant information
-            const profileInfo = exaClient().extractProfileInfo(searchResult);
+            // Step 2: Extract relevant information - pass the requested handle for better accuracy
+            const profileInfo = exaClient().extractProfileInfo(searchResult, cleanHandle);
 
             // Handle case where no profile data was found
             if (!profileInfo || !profileInfo.tweets || profileInfo.tweets.length === 0) {
@@ -45,16 +45,24 @@ export async function POST(request: NextRequest) {
                 // Step 3: Generate persona using OpenAI
                 const personaData = await openaiClient().generatePersona({
                     recentTweets: profileInfo.tweets,
-                    bio: profileInfo.bio || '',
+                    bio: profileInfo.bio,
+                    handle: cleanHandle, // Pass the handle to OpenAI
                 });
+
+                // Use the requested handle and extracted name
+                const finalPersona = {
+                    ...personaData,
+                    // Override the handle with the requested handle
+                    handle: cleanHandle,
+                    // If OpenAI returned "Unknown User", use the name from profileInfo
+                    name: personaData.name === 'Unknown User' ? profileInfo.name : personaData.name,
+                    profileImageUrl: profileInfo.profileImageUrl,
+                };
 
                 // Construct the response
                 const response: GeneratePersonaResponse = {
                     success: true,
-                    persona: {
-                        ...personaData,
-                        profileImageUrl: profileInfo.profileImageUrl,
-                    },
+                    persona: finalPersona,
                 };
 
                 return NextResponse.json(response);
