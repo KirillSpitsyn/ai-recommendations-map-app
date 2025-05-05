@@ -6,12 +6,12 @@ interface LoadingStateProps {
 }
 
 const LoadingState: React.FC<LoadingStateProps> = ({
-                                                       message = 'Loading...',
-                                                       fullScreen = false
-                                                   }) => {
+    message = 'Loading...',
+    fullScreen = false
+}) => {
     const containerClasses = fullScreen
-        ? 'fixed inset-0 bg-white bg-opacity-80 flex items-center justify-center z-50'
-        : 'w-full flex flex-col items-center justify-center p-8';
+        ? 'fixed inset-0 bg-background bg-opacity-80 flex items-center justify-center z-50 transition-colors duration-200'
+        : 'w-full flex flex-col items-center justify-center p-8 border border-border rounded-lg bg-card-bg transition-colors duration-200';
 
     return (
         <div className={containerClasses}>
@@ -22,9 +22,9 @@ const LoadingState: React.FC<LoadingStateProps> = ({
                 </div>
 
                 <div className="mt-4 text-center">
-                    <p className="text-lg font-medium text-gray-700">{message}</p>
+                    <p className="text-lg font-medium text-primary transition-colors duration-200">{message}</p>
                     {fullScreen && (
-                        <p className="text-sm text-gray-500 mt-2">
+                        <p className="text-sm text-muted mt-2 transition-colors duration-200">
                             This may take a few moments...
                         </p>
                     )}
