@@ -56,7 +56,7 @@ const LocationList: React.FC<LocationListProps> = ({
 
     if (!locations.length) {
         return (
-            <div className="bg-gray-50 p-4 rounded-md text-center text-gray-500">
+            <div className="bg-card-bg bg-opacity-50 p-4 rounded-md text-center text-muted border border-border transition-colors duration-200">
                 No locations found.
             </div>
         );
@@ -89,8 +89,8 @@ const LocationList: React.FC<LocationListProps> = ({
 
     return (
         <div className="space-y-4 mt-4">
-            <h2 className="text-xl font-bold">Recommended Locations</h2>
-            <p className="text-sm text-black">Based on your X persona profile</p>
+            <h2 className="text-xl font-bold text-primary transition-colors duration-200">Recommended Locations</h2>
+            <p className="text-sm text-primary transition-colors duration-200">Based on your X persona profile</p>
 
             <div className="space-y-3">
                 {locations.map((location, index) => {
@@ -102,9 +102,9 @@ const LocationList: React.FC<LocationListProps> = ({
                             key={location.id}
                             className={`border rounded-lg overflow-hidden shadow-sm transition-all cursor-pointer ${
                                 selectedLocationId === location.id
-                                    ? 'border-blue-500 bg-blue-50'
-                                    : 'border-gray-200 hover:bg-gray-50'
-                            }`}
+                                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30'
+                                    : 'border-border hover:bg-card-bg'
+                            } transition-colors duration-200`}
                             onClick={() => onLocationSelect(location.id)}
                         >
                             <div className="p-4">
@@ -121,7 +121,7 @@ const LocationList: React.FC<LocationListProps> = ({
                                                 />
                                             </div>
                                         ) : (
-                                            <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-xl">
+                                            <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center text-xl transition-colors duration-200">
                                                 {getCategoryEmoji(location.category)}
                                             </div>
                                         )}
@@ -129,15 +129,15 @@ const LocationList: React.FC<LocationListProps> = ({
 
                                     <div className="flex-grow">
                                         <div className="flex justify-between items-start">
-                                            <h3 className="font-medium text-lg">{location.name}</h3>
+                                            <h3 className="font-medium text-lg text-primary transition-colors duration-200">{location.name}</h3>
                                             {location.rating && (
-                                                <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">
+                                                <div className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs font-medium transition-colors duration-200">
                                                     ★ {typeof location.rating === 'number' ? location.rating.toFixed(1) : location.rating}
                                                 </div>
                                             )}
                                         </div>
 
-                                        <p className="text-sm text-gray-500 mt-1">{location.address}</p>
+                                        <p className="text-sm text-primary mt-1 transition-colors duration-200">{location.address}</p>
 
                                         {/* Place photo - shows actual Google photo if available */}
                                         {photoUrl && (
@@ -147,19 +147,19 @@ const LocationList: React.FC<LocationListProps> = ({
                                                     alt={location.name}
                                                     className="w-full h-full object-cover"
                                                 />
-                                                <div className="absolute top-2 right-2 bg-white bg-opacity-75 rounded-full w-8 h-8 flex items-center justify-center text-gray-700 text-sm font-bold">
+                                                <div className="absolute top-2 right-2 bg-white dark:bg-gray-800 bg-opacity-75 dark:bg-opacity-75 rounded-full w-8 h-8 flex items-center justify-center text-gray-700 dark:text-gray-300 text-sm font-bold transition-colors duration-200">
                                                     {index + 1}
                                                 </div>
                                             </div>
                                         )}
 
                                         <div className="mt-2">
-                                            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-xs font-medium text-gray-700">
+                                            <span className="inline-block bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-1 text-xs font-medium text-black dark:text-black transition-colors duration-200">
                                                 {getCategoryEmoji(location.category)} {location.category}
                                             </span>
                                         </div>
 
-                                        <p className="mt-2 text-sm text-gray-700">{location.description}</p>
+                                        <p className="mt-2 text-sm text-primary transition-colors duration-200">{location.description}</p>
                                         
                                         {/* Website link - only if it's a valid URL */}
                                         {isValidWebsite(location.website) && (
@@ -168,7 +168,7 @@ const LocationList: React.FC<LocationListProps> = ({
                                                     href={location.website}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm"
+                                                    className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm transition-colors duration-200"
                                                     onClick={(e) => e.stopPropagation()} // Prevent triggering parent onClick
                                                 >
                                                     <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
