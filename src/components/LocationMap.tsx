@@ -385,7 +385,7 @@ const LocationMap: React.FC<LocationMapProps> = ({
                                 {selectedLocationId === location.id && (
                                     <InfoWindow onCloseClick={() => onLocationSelect('')}>
                                         <div className="p-3 max-w-sm">
-                                            <h3 className="text-lg text-primary">{location.name}</h3>
+                                            <h3 className="text-lg text-gray-100">{location.name}</h3>
                                             <p className="text-sm text-gray-600 mb-2">{location.address}</p>
                                             {placePhotos[location.id] ? (
                                                 <div className="mb-2 relative h-48 w-full overflow-hidden rounded">
