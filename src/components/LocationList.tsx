@@ -56,7 +56,7 @@ const LocationList: React.FC<LocationListProps> = ({
 
     if (!locations.length) {
         return (
-            <div className="bg-card-bg bg-opacity-50 p-4 rounded-md text-center text-muted border border-border transition-colors duration-200">
+            <div className="bg-card-bg bg-opacity-50 p-4 rounded-md text-center text-primary border border-border transition-colors duration-200">
                 No locations found.
             </div>
         );
@@ -102,7 +102,7 @@ const LocationList: React.FC<LocationListProps> = ({
                             key={location.id}
                             className={`border rounded-lg overflow-hidden shadow-sm transition-all cursor-pointer ${
                                 selectedLocationId === location.id
-                                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30'
+                                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-800'
                                     : 'border-border hover:bg-card-bg'
                             } transition-colors duration-200`}
                             onClick={() => onLocationSelect(location.id)}
@@ -129,7 +129,11 @@ const LocationList: React.FC<LocationListProps> = ({
 
                                     <div className="flex-grow">
                                         <div className="flex justify-between items-start">
-                                            <h3 className="font-medium text-lg text-primary transition-colors duration-200">{location.name}</h3>
+                                            <h3 className={`font-medium text-lg transition-colors duration-200 ${
+                                                selectedLocationId === location.id 
+                                                    ? 'text-gray-900 dark:text-white' 
+                                                    : 'text-primary'
+                                            }`}>{location.name}</h3>
                                             {location.rating && (
                                                 <div className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs font-medium transition-colors duration-200">
                                                     ★ {typeof location.rating === 'number' ? location.rating.toFixed(1) : location.rating}
@@ -137,7 +141,11 @@ const LocationList: React.FC<LocationListProps> = ({
                                             )}
                                         </div>
 
-                                        <p className="text-sm text-primary mt-1 transition-colors duration-200">{location.address}</p>
+                                        <p className={`text-sm mt-1 transition-colors duration-200 ${
+                                            selectedLocationId === location.id 
+                                                ? 'text-gray-700 dark:text-gray-700' 
+                                                : 'text-primary'
+                                        }`}>{location.address}</p>
 
                                         {/* Place photo - shows actual Google photo if available */}
                                         {photoUrl && (
@@ -154,12 +162,16 @@ const LocationList: React.FC<LocationListProps> = ({
                                         )}
 
                                         <div className="mt-2">
-                                            <span className="inline-block bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-1 text-xs font-medium text-black dark:text-black transition-colors duration-200">
+                                            <span className="inline-block bg-gray-100 dark:bg-gray-700 rounded-full px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200">
                                                 {getCategoryEmoji(location.category)} {location.category}
                                             </span>
                                         </div>
 
-                                        <p className="mt-2 text-sm text-primary transition-colors duration-200">{location.description}</p>
+                                        <p className={`mt-2 text-sm transition-colors duration-200 ${
+                                            selectedLocationId === location.id 
+                                                ? 'text-gray-700 dark:text-gray-700' 
+                                                : 'text-primary'
+                                        }`}>{location.description}</p>
                                         
                                         {/* Website link - only if it's a valid URL */}
                                         {isValidWebsite(location.website) && (
