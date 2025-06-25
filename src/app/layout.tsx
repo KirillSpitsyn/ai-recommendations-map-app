@@ -43,7 +43,7 @@ export default function RootLayout({
                                         />
                                     </div>
                                     <div>
-                                        <h1 className="text-2xl font-bold">Bespoken Beaver by Toronto DAO</h1>
+                                        <h1 className="text-2xl font-bold">Bespoke Beaver by Toronto DAO</h1>
                                         <p className="text-sm opacity-80 text-primary">Discover your perfect places based on your X persona</p>
                                     </div>
                                 </div>
